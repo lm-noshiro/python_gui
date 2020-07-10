@@ -25,8 +25,8 @@ def main():
     image = Image.open(IMAGE_FILE)
     image_width, image_height = image.size
     window_size = RectSize(width = image_width, height = image_height)
-    root = initialize_window(window_size)
-    canvas = create_canvas_on(root, window_size, canvas_place=Point(0, 0))
+    window = initialize_window(window_size)
+    canvas = create_canvas_on(window, window_size, canvas_place=Point(0, 0))
     image_tk = ImageTk.PhotoImage(image)
     canvas.create_image(0, 0, image=image_tk, anchor="nw")
 
@@ -53,12 +53,12 @@ def main():
     rect.subscribe(draw_rect)
 
     def on_mouse_move(x, y):
-        nonlocal mouse_left_is_down
+        nonlocal mouse_left_is_down, rect_end
         if not mouse_left_is_down: return
         rect_end.on_next(Point(x, y))
 
     def on_mouse_left_down(x, y):
-        nonlocal mouse_left_is_down
+        nonlocal mouse_left_is_down, rect_begin, rect_end
         mouse_left_is_down = True
         rect_begin.on_next(Point(x, y))
         rect_end.on_next(Point(x, y))
@@ -67,19 +67,11 @@ def main():
         nonlocal mouse_left_is_down
         mouse_left_is_down = False
 
-    root.bind('<Motion>',
-      lambda event: on_mouse_move(event.x, event.y)
-    )
+    window.bind('<Motion>', lambda event: on_mouse_move(event.x, event.y))
+    window.bind('<Button-1>', lambda event: on_mouse_left_down(event.x, event.y))
+    window.bind('<ButtonRelease-1>', lambda event: on_mouse_left_up())
 
-    root.bind('<Button-1>',
-      lambda event: on_mouse_left_down(event.x, event.y)
-    )
-
-    root.bind('<ButtonRelease-1>',
-      lambda event: on_mouse_left_up()
-    )
-
-    root.mainloop()
+    window.mainloop()
 
 
 if __name__ == '__main__':
