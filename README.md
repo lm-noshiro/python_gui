@@ -1,4 +1,6 @@
-# Usage
+# Cropper
+
+## Usage
 
 1. create venv
 
@@ -13,14 +15,14 @@ $ source env/bin/activate
 (env) $ pip install -r requirements.txt
 ```
 
-3. Run `main.py` or `main_rx_ver.py`
+3. Run `cropper.py` or `cropper_rx.py`
 
 ```sh
-(env) $ python3 ./src/main.py
+(env) $ python3 ./src/cropper.py
 ```
 
 or
 
 ```sh
-(env) $ python3 ./src/main_rx_ver.py
+(env) $ python3 ./src/cropper_rx_ver.py
 ```

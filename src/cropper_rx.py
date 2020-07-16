@@ -1,4 +1,7 @@
 from PIL import Image, ImageTk
+import rx
+from rx.subject import Subject
+from rx import operators as ops
 
 from typedefs import (
     Point,
@@ -13,7 +16,7 @@ from canvas_utils import (
 )
 
 
-IMAGE_FILE = "img/cityscapes_lindau_000057_000019_leftImg8bit.png"
+IMAGE_FILE = "img/cat_illust_small.png"
 
 
 
@@ -41,21 +44,24 @@ def main():
 
     # state
     mouse_left_is_down = False
-    rect_begin = Point(0, 0)
-    rect_end = Point(0, 0)
+    rect_begin = Subject()
+    rect_end = Subject()
+
+    rect = rx.combine_latest(rect_begin, rect_end).pipe(
+        ops.map(lambda tpl: rect_from_2points(*tpl))
+    )
+    rect.subscribe(draw_rect)
 
     def on_mouse_move(x, y):
-        nonlocal mouse_left_is_down, rect_begin, rect_end
+        nonlocal mouse_left_is_down, rect_end
         if not mouse_left_is_down: return
-        rect_end = Point(x, y)
-        draw_rect(rect_from_2points(rect_begin, rect_end))
+        rect_end.on_next(Point(x, y))
 
     def on_mouse_left_down(x, y):
         nonlocal mouse_left_is_down, rect_begin, rect_end
         mouse_left_is_down = True
-        rect_begin = Point(x, y)
-        rect_end = Point(x, y)
-        draw_rect(rect_from_2points(rect_begin, rect_end))
+        rect_begin.on_next(Point(x, y))
+        rect_end.on_next(Point(x, y))
 
     def on_mouse_left_up():
         nonlocal mouse_left_is_down
@@ -70,4 +76,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
