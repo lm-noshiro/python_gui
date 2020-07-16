@@ -26,3 +26,16 @@ or
 ```sh
 (env) $ python3 ./src/cropper_rx_ver.py
 ```
+
+## lint
+
+```sh
+(env) $ python3 -m flake8 ./src
+```
+
+## format
+
+```sh
+(env) $ python3 -m isort ./src
+(env) $ python3 -m black -l 79 ./src
+```
