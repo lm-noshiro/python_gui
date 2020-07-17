@@ -32,14 +32,14 @@ def main():
     rect_begin = Point(0, 0)
     rect_end = Point(0, 0)
 
-    def on_mouse_move(x, y):
-        nonlocal rect_begin, rect_end
-        rect_end = Point(x, y)
-        draw_rect(rect_from_2points(rect_begin, rect_end))
-
     def on_mouse_left_down(x, y):
         nonlocal rect_begin, rect_end
         rect_begin = Point(x, y)
+        rect_end = Point(x, y)
+        draw_rect(rect_from_2points(rect_begin, rect_end))
+
+    def on_mouse_move(x, y):
+        nonlocal rect_begin, rect_end
         rect_end = Point(x, y)
         draw_rect(rect_from_2points(rect_begin, rect_end))
 
