@@ -4,15 +4,15 @@ from typedefs import rect_to_xxyy
 
 
 def initialize_window(window_size):
-    root = tk.Tk()  # create window
+    window = tk.Tk()  # create window
     width, height = window_size
-    root.geometry("{}x{}".format(width, height))  # set window size
-    return root
+    window.geometry("{}x{}".format(width, height))  # set window size
+    return window
 
 
-def create_canvas_on(root, canvas_size, *, canvas_place):
+def create_canvas_on(window, canvas_size, *, canvas_place):
     width, height = canvas_size
-    canvas = tk.Canvas(root, width=width, height=height)  # create canvas
+    canvas = tk.Canvas(window, width=width, height=height)  # create canvas
     x, y = canvas_place
     canvas.place(x=x, y=y)
     return canvas
