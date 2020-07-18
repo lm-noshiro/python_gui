@@ -1,7 +1,6 @@
 import rx
-from PIL import Image, ImageTk
 from rx import operators as ops
-from rx.subject import Subject
+from PIL import Image, ImageTk
 
 from canvas_utils import create_canvas_on, draw_rect_on, initialize_window
 from typedefs import Point, RectSize, rect_from_2points
@@ -10,7 +9,7 @@ IMAGE_FILE = "img/cat_illust_small.png"
 
 
 def createMouseEventStream(window, event_name: str):
-    stream = Subject()
+    stream = rx.Subject()
     window.bind(event_name, lambda ev: stream.on_next(Point(ev.x, ev.y)))
     return stream
 
