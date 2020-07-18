@@ -12,7 +12,7 @@ $ source env/bin/activate
 2. Install dependencies
 
 ```sh
-(env) $ pip install -r requirements.txt
+(env) $ python3 -m pip install -r requirements.txt
 ```
 
 3. Run `cropper.py` or `cropper_rx.py`
